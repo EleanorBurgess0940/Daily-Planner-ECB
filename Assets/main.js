@@ -7,13 +7,11 @@ window.onload = function () {
     currentMonth = months[month];
     day = d.getDate();
     year = d.getFullYear();
-    date = (currentMonth + " " + day + " , " + year)
+    date = (currentMonth + " " + day + " , " + year);
     $("#currentDay").html(date);
 
-
-    console.log(d.toString());
-    console.log(currentMonth);
-    console.log(day);
-    console.log(year);
-    console.log(date)
+    weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    day = d.getDay();
+    currentWeekday = weekdays[day]
+    $("#currentWeekday").html(currentWeekday)
 }
