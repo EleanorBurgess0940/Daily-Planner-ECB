@@ -44,10 +44,14 @@ for (i = 0; i < workDayHour.length; i++) {
   var newRow = $("<row>");
   $(".container").append(newRow);
   var timeCol = $("<div>");
-  newRow.append(timeCol);
-  timeCol.attr("class", "col-2");
+  var inputCol = $("<div>");
+  newRow.append(timeCol, inputCol);
+  timeCol.attr("class", "col-2 float-left");
   timeCol.html("<h1>" + workDayHour[i] + "</h1>");
   timeCol.innerhtml;
+  inputCol.attr("class", "col-10 float-left");
+  inputCol.html("<textarea rows='4'></textarea>");
+  newRow.attr("class", "row hour");
   if (workDayHour[i] < 9) {
     timeCol.text(workDayHour[i] + "PM");
   } else if (workDayHour === 12) {
