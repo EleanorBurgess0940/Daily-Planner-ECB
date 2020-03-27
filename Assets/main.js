@@ -40,12 +40,19 @@ window.onload = function() {
 var hour = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 var workDayHour = [9, 10, 11, 12, 1, 2, 3, 4, 5];
 
-setHour();
-
-function setHour() {
-  for (i = 0; i < workDayHour.length; i++) {
-    $(".container").append(
-      $("<div>", { class: "row tr" }).text(workDayHour[i])
-    );
+for (i = 0; i < workDayHour.length; i++) {
+  var newRow = $("<row>");
+  $(".container").append(newRow);
+  var timeCol = $("<div>");
+  newRow.append(timeCol);
+  timeCol.attr("class", "col-2");
+  timeCol.html("<h1>" + workDayHour[i] + "</h1>");
+  timeCol.innerhtml;
+  if (workDayHour[i] < 9) {
+    timeCol.text(workDayHour[i] + "PM");
+  } else if (workDayHour === 12) {
+    timeCol.text(workDayHour[i] + "PM");
+  } else {
+    timeCol.text(workDayHour[i] + "AM");
   }
 }
