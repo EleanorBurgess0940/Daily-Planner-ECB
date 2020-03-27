@@ -32,6 +32,7 @@ textarea {
 .time-block {
   text-align: center;
   background-color: white;
+  padding-right: 0;
 }
 
 .row {
@@ -40,12 +41,13 @@ textarea {
   border-top: 5px solid black;
 }
 .col {
-  border: 10px solid black;
+  padding-right: 0;
 }
 .hour {
   background-color: #ffffff;
   color: #000000;
   border-top: 1px dashed #000000;
+  font-size: 30px;
 }
 
 .past {

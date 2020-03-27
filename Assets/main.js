@@ -50,12 +50,20 @@ for (i = 0; i < workDayHour.length; i++) {
   $(".container").append(newRow);
   var timeCol = $("<div>");
   var inputCol = $("<div>");
-  newRow.append(timeCol, inputCol);
-  timeCol.attr("class", "col-2 float-left hour");
+  var saveCol = $("<div>");
+  var clearCol = $("<div>");
+  newRow.append(timeCol, inputCol, saveCol, clearCol);
+  timeCol.attr("class", "col col-2 float-left hour");
   timeCol.html("<h1>" + workDayHour[i] + "</h1>");
   timeCol.innerhtml;
-  inputCol.attr("class", "col-10 float-left");
+  inputCol.attr("class", "col-8 float-left col");
   inputCol.html("<textarea rows='4'></textarea>");
+  saveCol.attr("class", "col col-1 save float-right");
+  saveCol.attr("class", "btn button saveBtn");
+  saveCol.html("Save");
+  clearCol.attr("class", "col col-1 clear float-right");
+  clearCol.attr("class", "btn button saveBtn");
+  clearCol.html("Clear");
   newRow.attr("class", "row hour");
   newRow.attr("id", militaryHour[i]);
   if (workDayHour[i] < 9) {
