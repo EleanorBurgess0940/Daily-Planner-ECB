@@ -1,38 +1,16 @@
 //this on load of the window will grab the date.
 window.onload = function() {
+  var currentTime = function() {
+    var date = moment().format("MMMM Do YYYY, h:mm:ss a");
+    $("#currentDay").html(date);
+  };
+  setInterval(currentTime, 1000);
+
   let d;
 
   d = new Date();
 
-  //this will load the month but it comes in as a number
-  month = d.getMonth();
-  //list of the months in an array
-  months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-  //this takes the number of the month above and returns a month from the array
-  currentMonth = months[month];
-
-  //Grabs the days and years and writes the date in a format.
-  days = d.getDate();
-  year = d.getFullYear();
-  date = currentMonth + " " + days + " , " + year;
-
-  //changes the text in html for the above current date
-  $("#currentDay").html(date);
-
-  //like the months above the weekdays come in a number. so an array is necessary to return day of the week
+  // the weekdays come in a number. so an array is necessary to return day of the week
   weekdays = [
     "Sunday",
     "Monday",
@@ -53,38 +31,31 @@ window.onload = function() {
   currentHour = hour;
 
   //adds functionality to the yesterday button.
-  var yesterday = days - 1;
-  var yesterdayDate = currentMonth + " " + yesterday + " , " + year;
-  var yesterdayDayWeek = day - 1;
-  if (yesterdayDayWeek < 0) {
-    yesterdayDayWeek = yesterdayDayWeek + 7;
-  }
-  var yesterdayDayOfWeek = weekdays[yesterdayDayWeek];
+  var yesterday = moment()
+    .subtract(1, "day")
+    .format("LLL");
+  console.log(yesterday);
   $("#yesterdayBtn").click(function() {
-    $("#currentDay").html(yesterdayDate);
-    $("#currentWeekday").html(yesterdayDayOfWeek);
+    $("#currentDay").hide();
+    $("#currentWeekday").hide();
     $("#yesterdayBtn").hide();
     $("#tomorrowBtn").hide();
+    $("#yesterday").show();
+    $("#yesterday").html(yesterday);
   });
 
   //adds functionality to the tomorrow button
-  var tomorrow = days + 1;
-  if (tomorrow > 31) {
-    tomorrow = tomorrow - 31;
-    currentMonth = months[month + 1];
-  }
-  var tomorrowDate = currentMonth + " " + tomorrow + " , " + year;
-  var tomorrowDayWeek = day + 1;
-  if (tomorrowDayWeek > 6) {
-    tomorrowDayWeek = tomorrowDayWeek - 7;
-  }
-  var tomorrowDayOfWeek = weekdays[tomorrowDayWeek];
-
+  var tomorrow = moment()
+    .add(1, "day")
+    .format("LLL");
+  console.log(tomorrow);
   $("#tomorrowBtn").click(function() {
-    $("#currentDay").html(tomorrowDate);
-    $("#currentWeekday").html(tomorrowDayOfWeek);
-    $("#tomorrowBtn").hide();
+    $("#currentDay").hide();
+    $("#currentWeekday").hide();
     $("#yesterdayBtn").hide();
+    $("#tomorrowBtn").hide();
+    $("#tomorrow").show();
+    $("#tomorrow").html(tomorrow);
   });
 };
 
