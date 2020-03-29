@@ -4,11 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--Added jquery script-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!--Added bootstrap link-->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
+
+    <!--Added font links-->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -19,6 +24,8 @@
       href="https://fonts.google  apis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+
+    <!--Added my own style sheet-->
     <link rel="stylesheet" href="Assets/style.css" />
     <title>Work Day Scheduler</title>
   </head>
@@ -26,9 +33,15 @@
   <body>
     <header class="jumbotron">
       <h1 class="display-3">Work Day Scheduler</h1>
+
       <p class="lead">A simple calendar app for scheduling your work day</p>
+      <!--This with javascript will show the current date-->
       <p id="currentDay" class="lead"></p>
+
+      <!--This with javascript will show the current day of the week-->
       <p id="currentWeekday" class="lead"></p>
+
+      <!--Two buttons that with javascript will change the date by one-->
       <button class="float-left" id="yesterdayBtn">Yesterday</button>
       <button class="float-right" id="tomorrowBtn">Tomorrow</button>
     </header>
