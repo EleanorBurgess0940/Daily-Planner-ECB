@@ -55,14 +55,16 @@ window.onload = function() {
   });
 
   var tomorrow = days + 1;
+  if (tomorrow > 31) {
+    tomorrow = tomorrow - 31;
+    currentMonth = months[month + 1];
+  }
   var tomorrowDate = currentMonth + " " + tomorrow + " , " + year;
   var tomorrowDayWeek = day + 1;
-  if ((tomorrowDayWeek = 7)) {
+  if (tomorrowDayWeek > 6) {
     tomorrowDayWeek = tomorrowDayWeek - 7;
   }
-  console.log(tomorrowDayWeek);
   var tomorrowDayOfWeek = weekdays[tomorrowDayWeek];
-  console.log(tomorrowDayOfWeek);
 
   $("#tomorrowBtn").click(function() {
     $("#currentDay").html(tomorrowDate);
@@ -71,47 +73,92 @@ window.onload = function() {
     $("#yesterdayBtn").hide();
   });
 };
+var historyHourArr = [, , , , , , , ,];
 var workDayHour = [9, 10, 11, 12, 1, 2, 3, 4, 5];
 var militaryHour = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+var wordHour = [
+  "nine",
+  "ten",
+  "eleven",
+  "twelve",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five"
+];
+function createSchedule() {
+  for (i = 0; i < workDayHour.length; i++) {
+    var newRow = $("<row>");
+    $(".container").append(newRow);
+    var timeCol = $("<div>");
+    var inputCol = $("<div>");
+    var saveCol = $("<div>");
+    newRow.append(timeCol, inputCol, saveCol);
+    timeCol.attr("class", "col col-2 float-left hour time-block");
+    timeCol.html("<h1>" + militaryHour[i] + "</h1>");
+    timeCol.innerhtml;
+    inputCol.attr("class", "col-9 float-left col input textarea");
+    inputCol.html("<textarea rows='4'></textarea>");
+    saveCol.attr("class", "col col-1 save float-right");
+    saveCol.attr("class", "btn button saveBtn");
+    saveCol.attr("id", militaryHour[i]);
+    saveCol.html("Save");
+    newRow.attr("class", "row event");
+    newRow.attr("id", militaryHour[i]);
+    if (workDayHour[i] < 9) {
+      timeCol.text(workDayHour[i] + "PM");
+    } else if (workDayHour === 12) {
+      timeCol.text(workDayHour[i] + "PM");
+    } else {
+      timeCol.text(workDayHour[i] + "AM");
+    }
 
-for (i = 0; i < workDayHour.length; i++) {
-  var newRow = $("<row>");
-  $(".container").append(newRow);
-  var timeCol = $("<div>");
-  var inputCol = $("<div>");
-  var saveCol = $("<div>");
-  var clearCol = $("<div>");
-  newRow.append(timeCol, inputCol, saveCol, clearCol);
-  timeCol.attr("class", "col col-2 float-left hour");
-  timeCol.html("<h1>" + workDayHour[i] + "</h1>");
-  timeCol.innerhtml;
-  inputCol.attr("class", "col-8 float-left col");
-  inputCol.html("<textarea rows='4'></textarea>");
-  saveCol.attr("class", "col col-1 save float-right");
-  saveCol.attr("class", "btn button saveBtn");
-  saveCol.html("Save");
-  clearCol.attr("class", "col col-1 clear float-right");
-  clearCol.attr("class", "btn button saveBtn");
-  clearCol.html("Clear");
-  newRow.attr("class", "row hour");
-  newRow.attr("id", militaryHour[i]);
-  if (workDayHour[i] < 9) {
-    timeCol.text(workDayHour[i] + "PM");
-  } else if (workDayHour === 12) {
-    timeCol.text(workDayHour[i] + "PM");
-  } else {
-    timeCol.text(workDayHour[i] + "AM");
+    $("row").each(function() {
+      var getId = parseInt($(this).attr("id"));
+      var timeOfDay = parseInt(moment().format("H"));
+      if (getId < timeOfDay) {
+        $(this).addClass("past");
+      } else if (getId > timeOfDay) {
+        $(this).addClass("future");
+      } else {
+        $(this).addClass("present");
+      }
+    });
   }
+
+  $(".saveBtn").click(function(event) {
+    event.preventDefault();
+
+    var historyHour = $(this).attr("id");
+    historyHour = historyHour - 9;
+    var historyEvent = $(this)
+      .siblings(".input")
+      .children("textarea")
+      .val();
+
+    historyHourArr[historyHour] = historyEvent;
+    localStorage.setItem("schedule", JSON.stringify(historyHourArr));
+  });
+
+  function getSchedule() {
+    var storedSchedule = localStorage.getItem("schedule");
+    console.log(storedSchedule);
+    if (storedSchedule) {
+      historyHourArr = JSON.parse(storedSchedule);
+      console.log(historyHourArr);
+    }
+    displaySchedule();
+  }
+
+  function displaySchedule() {
+    var TextAreaArr = $("textarea");
+    for (var i = 0; i < historyHourArr.length; i++) {
+      var newText = historyHourArr[i];
+      $(TextAreaArr[i]).val(newText);
+    }
+  }
+  getSchedule();
 }
 
-$("row").each(function() {
-  var getId = parseInt($(this).attr("id"));
-  var timeOfDay = parseInt(moment().format("H"));
-  if (getId < timeOfDay) {
-    $(this).addClass("past");
-  } else if (getId > timeOfDay) {
-    $(this).addClass("future");
-  } else {
-    $(this).addClass("present");
-  }
-});
+createSchedule();
