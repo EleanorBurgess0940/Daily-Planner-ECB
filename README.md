@@ -24,4 +24,4 @@ As this is still a work in progress I would like to come back and work on three 
 
 ![Header](Images/Header.PNG)
 ![5pm](Images/schedule5pm.PNG)
-![12pm](images/schedule12pm.PNG)
+![12pm](Images/schedule12pm.PNG)
