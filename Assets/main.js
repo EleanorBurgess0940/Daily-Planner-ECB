@@ -2,6 +2,7 @@ window.onload = function() {
   let d;
 
   d = new Date();
+
   month = d.getMonth();
   months = [
     "January",
@@ -18,9 +19,9 @@ window.onload = function() {
     "December"
   ];
   currentMonth = months[month];
-  day = d.getDate();
+  days = d.getDate();
   year = d.getFullYear();
-  date = currentMonth + " " + day + " , " + year;
+  date = currentMonth + " " + days + " , " + year;
   $("#currentDay").html(date);
 
   weekdays = [
@@ -37,11 +38,39 @@ window.onload = function() {
   $("#currentWeekday").html(currentWeekday);
 
   hour = d.getHours();
-  console.log(hour);
   currentHour = hour;
-  console.log(currentHour);
-};
 
+  var yesterday = days - 1;
+  var yesterdayDate = currentMonth + " " + yesterday + " , " + year;
+  var yesterdayDayWeek = day - 1;
+  if (yesterdayDayWeek < 0) {
+    yesterdayDayWeek = yesterdayDayWeek + 7;
+  }
+  var yesterdayDayOfWeek = weekdays[yesterdayDayWeek];
+  $("#yesterdayBtn").click(function() {
+    $("#currentDay").html(yesterdayDate);
+    $("#currentWeekday").html(yesterdayDayOfWeek);
+    $("#yesterdayBtn").hide();
+    $("#tomorrowBtn").hide();
+  });
+
+  var tomorrow = days + 1;
+  var tomorrowDate = currentMonth + " " + tomorrow + " , " + year;
+  var tomorrowDayWeek = day + 1;
+  if ((tomorrowDayWeek = 7)) {
+    tomorrowDayWeek = tomorrowDayWeek - 7;
+  }
+  console.log(tomorrowDayWeek);
+  var tomorrowDayOfWeek = weekdays[tomorrowDayWeek];
+  console.log(tomorrowDayOfWeek);
+
+  $("#tomorrowBtn").click(function() {
+    $("#currentDay").html(tomorrowDate);
+    $("#currentWeekday").html(tomorrowDayOfWeek);
+    $("#tomorrowBtn").hide();
+    $("#yesterdayBtn").hide();
+  });
+};
 var workDayHour = [9, 10, 11, 12, 1, 2, 3, 4, 5];
 var militaryHour = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
@@ -77,16 +106,12 @@ for (i = 0; i < workDayHour.length; i++) {
 
 $("row").each(function() {
   var getId = parseInt($(this).attr("id"));
-  console.log("id- " + getId);
   var timeOfDay = parseInt(moment().format("H"));
   if (getId < timeOfDay) {
-    console.log("Past");
     $(this).addClass("past");
   } else if (getId > timeOfDay) {
-    console.log("Future");
     $(this).addClass("future");
   } else {
-    console.log("Present");
     $(this).addClass("present");
   }
 });
