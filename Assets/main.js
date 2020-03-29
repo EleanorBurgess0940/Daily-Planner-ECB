@@ -1,9 +1,12 @@
+//this on load of the window will grab the date.
 window.onload = function() {
   let d;
 
   d = new Date();
 
+  //this will load the month but it comes in as a number
   month = d.getMonth();
+  //list of the months in an array
   months = [
     "January",
     "February",
@@ -18,12 +21,18 @@ window.onload = function() {
     "November",
     "December"
   ];
+  //this takes the number of the month above and returns a month from the array
   currentMonth = months[month];
+
+  //Grabs the days and years and writes the date in a format.
   days = d.getDate();
   year = d.getFullYear();
   date = currentMonth + " " + days + " , " + year;
+
+  //changes the text in html for the above current date
   $("#currentDay").html(date);
 
+  //like the months above the weekdays come in a number. so an array is necessary to return day of the week
   weekdays = [
     "Sunday",
     "Monday",
@@ -35,11 +44,15 @@ window.onload = function() {
   ];
   day = d.getDay();
   currentWeekday = weekdays[day];
+
+  //changes the text in html for the above current day
   $("#currentWeekday").html(currentWeekday);
 
+  //grabs the current hour
   hour = d.getHours();
   currentHour = hour;
 
+  //adds functionality to the yesterday button.
   var yesterday = days - 1;
   var yesterdayDate = currentMonth + " " + yesterday + " , " + year;
   var yesterdayDayWeek = day - 1;
@@ -54,6 +67,7 @@ window.onload = function() {
     $("#tomorrowBtn").hide();
   });
 
+  //adds functionality to the tomorrow button
   var tomorrow = days + 1;
   if (tomorrow > 31) {
     tomorrow = tomorrow - 31;
@@ -73,47 +87,55 @@ window.onload = function() {
     $("#yesterdayBtn").hide();
   });
 };
+
+//global variables
 var historyHourArr = [, , , , , , , ,];
 var workDayHour = [9, 10, 11, 12, 1, 2, 3, 4, 5];
 var militaryHour = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-var wordHour = [
-  "nine",
-  "ten",
-  "eleven",
-  "twelve",
-  "one",
-  "two",
-  "three",
-  "four",
-  "five"
-];
+
+//function for creating the table in which the schedule sits
 function createSchedule() {
+  //for loop that runs through the workdayhours and creates a row
   for (i = 0; i < workDayHour.length; i++) {
     var newRow = $("<row>");
     $(".container").append(newRow);
+
+    //three different columns
     var timeCol = $("<div>");
     var inputCol = $("<div>");
     var saveCol = $("<div>");
+
+    //Every row will be set up like this
     newRow.append(timeCol, inputCol, saveCol);
-    timeCol.attr("class", "col col-2 float-left hour time-block");
+
+    //first col settings(time col)
+    timeCol.attr("class", "col col-2 float-left time-block");
     timeCol.html("<h1>" + militaryHour[i] + "</h1>");
-    timeCol.innerhtml;
+
+    //second col settings(input col)
     inputCol.attr("class", "col-9 float-left col input textarea");
     inputCol.html("<textarea rows='4'></textarea>");
+
+    //button settings at the end of each row
     saveCol.attr("class", "col col-1 save float-right");
     saveCol.attr("class", "btn button saveBtn");
     saveCol.attr("id", militaryHour[i]);
     saveCol.html("Save");
+
+    //new row settings
     newRow.attr("class", "row event");
     newRow.attr("id", militaryHour[i]);
+
+    //decides the am/pm of the hour
     if (workDayHour[i] < 9) {
       timeCol.text(workDayHour[i] + "PM");
-    } else if (workDayHour === 12) {
+    } else if (workDayHour[i] === 12) {
       timeCol.text(workDayHour[i] + "PM");
     } else {
       timeCol.text(workDayHour[i] + "AM");
     }
 
+    //decides the tense of the row(past, future, present)
     $("row").each(function() {
       var getId = parseInt($(this).attr("id"));
       var timeOfDay = parseInt(moment().format("H"));
@@ -127,6 +149,7 @@ function createSchedule() {
     });
   }
 
+  //adds functionality to the save button.also saves the input area as a string.
   $(".saveBtn").click(function(event) {
     event.preventDefault();
 
@@ -141,6 +164,7 @@ function createSchedule() {
     localStorage.setItem("schedule", JSON.stringify(historyHourArr));
   });
 
+  // grabs the schedule out of local storage
   function getSchedule() {
     var storedSchedule = localStorage.getItem("schedule");
     console.log(storedSchedule);
@@ -151,6 +175,7 @@ function createSchedule() {
     displaySchedule();
   }
 
+  //displays the schedule out of local storage
   function displaySchedule() {
     var TextAreaArr = $("textarea");
     for (var i = 0; i < historyHourArr.length; i++) {
@@ -158,7 +183,9 @@ function createSchedule() {
       $(TextAreaArr[i]).val(newText);
     }
   }
+  //runs this function
   getSchedule();
 }
 
+//runs this function
 createSchedule();
