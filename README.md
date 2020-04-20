@@ -21,6 +21,8 @@ I am still trying to figure out local storage. I ran into a lot of problems with
 # What I want to work on
 
 As this is still a work in progress I would like to come back and work on three things. One thing is i would like yesterday and tomorrow to have different events. The next thing i want to work on is a clear button. And finally i would like to learn how to go from this daily scheduler into a weekly scheduler.
+# Link
+https://eleanorburgess0940.github.io/Daily-Planner-ECB/
 
 ![Header](Images/Header.PNG)
 ![5pm](Images/schedule5pm.PNG)
